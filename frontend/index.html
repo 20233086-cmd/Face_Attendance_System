@@ -1,1 +1,65 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hệ Thống Điểm Danh Khuôn Mặt</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <h1>DASHBOARD ĐIỂM DANH REALTIME</h1>
+    </header>
 
+    <main class="container">
+        <!-- Khối hiển thị Webcam -->
+        <section class="camera-card">
+            <h2>Luồng Camera</h2>
+            <div class="video-container">
+                <video id="webcam" autoplay playsinline muted></video>
+                <canvas id="snapshot" style="display: none;"></canvas>
+            </div>
+
+            <!-- Backend (TV3) yêu cầu camera_code bắt buộc khi gửi checkin -->
+            <label for="camera-select" class="camera-select-label">Camera đang dùng:</label>
+            <select id="camera-select">
+                <option value="CAM-01">CAM-01 - Phòng A101</option>
+                <option value="CAM-02">CAM-02 - Phòng A102</option>
+            </select>
+
+            <!-- Bỏ onclick trực tiếp: việc gắn sự kiện được xử lý tập trung trong app.js
+                 để tránh chạy 2 lần / race condition giữa bật camera và bắt đầu vòng lặp checkin -->
+            <div class="controls">
+                <button id="btn-start">Bật Camera</button>
+                <button id="btn-stop">Tắt Camera</button>
+            </div>
+        </section>
+
+        <!-- Khối kết quả nhận diện & bảng điểm danh -->
+        <section class="result-card">
+            <h2>Kết Quả Nhận Diện</h2>
+            <div id="status-box" class="status idle">Đang chờ nhận diện...</div>
+
+            <h3>Lịch sử điểm danh</h3>
+            <table id="attendance-table">
+                <thead>
+                    <tr>
+                        <th>Thời gian</th>
+                        <th>Mã SV</th>
+                        <th>Họ và Tên</th>
+                        <th>Lớp</th>
+                        <th>Trạng thái</th>
+                    </tr>
+                </thead>
+                <tbody id="attendance-list">
+                    <!-- Dữ liệu sẽ đổ vào đây -->
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <script src="js/camera.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
